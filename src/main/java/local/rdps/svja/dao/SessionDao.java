@@ -82,7 +82,8 @@ public class SessionDao {
 			final DSLContext writeContext = DatabaseManager.getBuilder(writeConn);
 			// We should be inserting a new session
 			if (ValidationUtils.isEmpty(sessionId)) {
-				try (final InsertQuery<SessionsRecord> query = writeContext.insertQuery(SessionDao.s)) {
+				try {
+					final InsertQuery<SessionsRecord> query = writeContext.insertQuery(SessionDao.s);
 					// Set up the query
 					query.setReturning();
 					query.addValue(SessionDao.s.ID, SessionDao.createNewSessionId());
@@ -102,7 +103,8 @@ public class SessionDao {
 			}
 
 			// We should be updating an existing session
-			try (final UpdateQuery<SessionsRecord> query = writeContext.updateQuery(SessionDao.s)) {
+			try {
+				final UpdateQuery<SessionsRecord> query = writeContext.updateQuery(SessionDao.s);
 				// Set up the query
 				query.setReturning();
 				query.addValue(SessionDao.s.LAST_ACCESSED, DSL.currentLocalDateTime());
@@ -122,6 +124,9 @@ public class SessionDao {
 							+ writeContext.renderInlined(query));
 				}
 				return query.getReturnedRecord();
+			} catch (final DataAccessException e) {
+				// We weren't unique, so we have to try again
+				return SessionDao.createNewSessionOrUpdateLastAccessed(sessionId);
 			}
 		} catch (final SQLException | ApplicationException e) {
 			SessionDao.logger.error(e.getMessage(), e);

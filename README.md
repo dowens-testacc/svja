@@ -5,14 +5,12 @@ The RDPS Super Vulnerable Java Application is just that -- a super vulnerable ja
 Please remember that this application is intended to be highly vulnerable to a number of things. Be careful where you run it, limit who can access it (the Tomcat server should only listen on localhost and only ever on your personal machine). We are not responsible if you can't take proper care of your things, leaving your copy of it hanging out in the wind for anyone and everyone to steal your stuff or horribly compromise your machine. We recommend that you run this in a virtual machine (VM) that is secured and that has nothing sensitive on it and that has no connectivity to the internet. Failure to properly secure the system running this and the instance of it will likely result in a bad day for you. Like casual carnal relations without proper protections, you are only putting yourself in a position that you will come to regret someday. Consider yourself warned, but encouraged to play ;-)
 
 ## Requirements ##
-Apache Maven 3.6 or above
-npm 7.11 or above
-Java 11 or above
-Tomcat 9.0 or above
+* Apache Maven 3.6 or above
+* Java 21 or above
+* Tomcat 10.0 or above
 
 ## Installation ##
-The RDPS SVJA is composed of a Java struts 2 application running react. It is built by simply running:
-mvn clean package
+The RDPS SVJA is composed of a Java struts 2 application running react. It is built by simply running: ```mvn clean package```
 
 This creates a WAR in target -- svja.war. Simply place the WAR in your tomcat webapps folder. In a default Tomcat build go to http://127.0.0.1:8080/svja to access the application.
 

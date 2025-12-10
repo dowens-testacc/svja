@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -156,41 +156,40 @@ class DatabaseListener extends DefaultExecuteListener {
 		if (ctx.type() != ExecuteType.WRITE)
 			return;
 
-		try (final Query query = ctx.query()) {
-			// Is our Query object empty? If not, let's run through it
-			if (!ValidationUtils.isEmpty(query)) {
-				// Get rid of nulls
-				query.getParams().entrySet().stream().filter(entry -> Objects.nonNull(entry.getValue()))
-						.filter(entry -> !ValidationUtils.isEmpty(entry.getValue().getValue()))
-						.filter(entry -> CharSequence.class.isAssignableFrom(entry.getValue().getDataType().getType()))
-						.filter(entry -> DatabaseListener.NULL_CHARACTER
-								.matcher((CharSequence) entry.getValue().getValue()).find())
-						.forEach(entry -> query.bind(entry.getKey(), DatabaseListener.NULL_CHARACTER
-								.matcher((CharSequence) entry.getValue().getValue()).replaceAll("")));
+		final Query query = ctx.query();
+		// Is our Query object empty? If not, let's run through it
+		if (!ValidationUtils.isEmpty(query)) {
+			// Get rid of nulls
+			query.getParams().entrySet().stream().filter(entry -> Objects.nonNull(entry.getValue()))
+					.filter(entry -> !ValidationUtils.isEmpty(entry.getValue().getValue()))
+					.filter(entry -> CharSequence.class.isAssignableFrom(entry.getValue().getDataType().getType()))
+					.filter(entry -> DatabaseListener.NULL_CHARACTER
+							.matcher((CharSequence) entry.getValue().getValue()).find())
+					.forEach(entry -> query.bind(entry.getKey(), DatabaseListener.NULL_CHARACTER
+							.matcher((CharSequence) entry.getValue().getValue()).replaceAll("")));
 
-				if (query instanceof Update) {
-					if (!(query instanceof UpdateConditionStep)) {
-						if (!DatabaseListener.WHERE_CLAUSE.matcher(query.getSQL(ParamType.INDEXED)).find()) {
-							final String queryString = query.getSQL(ParamType.INLINED);
-							throw new RuntimeException(
-									"Someone is trying to run an UPDATE query without a WHERE clause ("
-											+ query.getClass() + "): " + queryString);
-						}
-					}
-				} else if (query instanceof Delete) {
-					if (!(query instanceof DeleteConditionStep)) {
-						if (!DatabaseListener.WHERE_CLAUSE.matcher(query.getSQL(ParamType.INDEXED)).find()) {
-							final String queryString = query.getSQL(ParamType.INLINED);
-							throw new RuntimeException(
-									"Someone is trying to run a DELETE query without a WHERE clause ("
-											+ query.getClass() + "): " + queryString);
-						}
+			if (query instanceof Update) {
+				if (!(query instanceof UpdateConditionStep)) {
+					if (!DatabaseListener.WHERE_CLAUSE.matcher(query.getSQL(ParamType.INDEXED)).find()) {
+						final String queryString = query.getSQL(ParamType.INLINED);
+						throw new RuntimeException(
+								"Someone is trying to run an UPDATE query without a WHERE clause ("
+										+ query.getClass() + "): " + queryString);
 					}
 				}
-			} else
-				throw new RuntimeException(
-						"Someone is trying to send pure SQL queries... we don't allow that anymore (use jOOq): "
-								+ ctx.sql());
-		}
+			} else if (query instanceof Delete) {
+				if (!(query instanceof DeleteConditionStep)) {
+					if (!DatabaseListener.WHERE_CLAUSE.matcher(query.getSQL(ParamType.INDEXED)).find()) {
+						final String queryString = query.getSQL(ParamType.INLINED);
+						throw new RuntimeException(
+								"Someone is trying to run a DELETE query without a WHERE clause ("
+										+ query.getClass() + "): " + queryString);
+					}
+				}
+			}
+		} else
+			throw new RuntimeException(
+					"Someone is trying to send pure SQL queries... we don't allow that anymore (use jOOq): "
+							+ ctx.sql());
 	}
 }

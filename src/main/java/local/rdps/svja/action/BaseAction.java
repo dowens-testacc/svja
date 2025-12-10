@@ -1,8 +1,8 @@
 package local.rdps.svja.action;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
+import org.apache.struts2.ActionContext;
+import org.apache.struts2.ActionSupport;
 import local.rdps.svja.action.preresultlistener.CookieWriter;
 import local.rdps.svja.action.preresultlistener.SessionWriter;
 import local.rdps.svja.blo.SessionBloGateway;
@@ -15,12 +15,13 @@ import local.rdps.svja.exception.IllegalParameterException;
 import local.rdps.svja.util.ValidationUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.struts2.interceptor.parameter.StrutsParameter;
 import org.jetbrains.annotations.NotNull;
 import org.jooq.lambda.tuple.Tuple2;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;
@@ -190,7 +191,7 @@ public class BaseAction extends ActionSupport implements ActionInterface {
 	 * @return
 	 */
 	public String getActionName() {
-		return ActionContext.getContext().getName();
+		return ActionContext.getContext().getActionName();
 	}
 
 	/**
@@ -392,17 +393,17 @@ public class BaseAction extends ActionSupport implements ActionInterface {
 	}
 
 	@Override
-	public void setServletRequest(final HttpServletRequest httpServletRequest) {
+	public void withServletRequest(final HttpServletRequest httpServletRequest) {
 		this.request = httpServletRequest;
 	}
 
 	@Override
-	public void setServletResponse(final HttpServletResponse httpServletResponse) {
+	public void withServletResponse(final HttpServletResponse httpServletResponse) {
 		this.response = httpServletResponse;
 	}
 
 	@Override
-	public void setSession(final Map<String, Object> session) {
+	public void withSession(final Map<String, Object> session) {
 		if (Objects.isNull(this.session)) {
 			this.session = new HashMap<>();
 		}

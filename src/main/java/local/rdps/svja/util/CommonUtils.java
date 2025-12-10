@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import org.jooq.DataType;
 import org.jooq.SelectField;
 
-import com.opensymphony.xwork2.ActionContext;
+import org.apache.struts2.ActionContext;
 
 import local.rdps.svja.constant.CommonConstants;
 

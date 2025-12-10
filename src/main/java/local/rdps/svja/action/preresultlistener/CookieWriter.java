@@ -2,17 +2,17 @@ package local.rdps.svja.action.preresultlistener;
 
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.StrutsStatics;
 import org.jetbrains.annotations.NotNull;
 
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.interceptor.PreResultListener;
+import org.apache.struts2.ActionContext;
+import org.apache.struts2.ActionInvocation;
+import org.apache.struts2.interceptor.PreResultListener;
 
 import local.rdps.svja.action.BaseAction;
 import local.rdps.svja.util.SessionUtils;
@@ -69,7 +69,7 @@ public class CookieWriter implements PreResultListener {
 			if (CookieWriter.logger.isWarnEnabled()) {
 				CookieWriter.logger.warn(
 						"We are running the session writer against something other than a BaseForm or the action is null; action = {} and the invocation was {}",
-						this.action, invocation.getInvocationContext().getName());
+						this.action, invocation.getInvocationContext().getActionName());
 			}
 		}
 	}

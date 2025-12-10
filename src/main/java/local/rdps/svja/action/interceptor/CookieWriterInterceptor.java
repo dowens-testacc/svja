@@ -5,7 +5,7 @@ import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.opensymphony.xwork2.ActionInvocation;
+import org.apache.struts2.ActionInvocation;
 
 import local.rdps.svja.action.BaseAction;
 import local.rdps.svja.action.preresultlistener.CookieWriter;

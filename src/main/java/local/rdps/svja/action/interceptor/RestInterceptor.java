@@ -6,8 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
-import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.interceptor.Interceptor;
+import org.apache.struts2.ActionInvocation;
+import org.apache.struts2.interceptor.Interceptor;
 
 import local.rdps.svja.action.RestAction;
 import local.rdps.svja.exception.NotFoundException;

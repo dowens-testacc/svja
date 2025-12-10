@@ -3,8 +3,8 @@ package local.rdps.svja.util;
 import java.nio.ByteBuffer;
 import java.util.Objects;
 
-import javax.servlet.ReadListener;
-import javax.servlet.ServletInputStream;
+import jakarta.servlet.ReadListener;
+import jakarta.servlet.ServletInputStream;
 
 import org.jetbrains.annotations.Nullable;
 

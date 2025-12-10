@@ -8,16 +8,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.StrutsStatics;
 import org.jetbrains.annotations.NotNull;
 
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionInvocation;
+import org.apache.struts2.ActionContext;
+import org.apache.struts2.ActionInvocation;
 
 import local.rdps.svja.action.AuthenticationAction;
 import local.rdps.svja.action.BaseAction;
@@ -68,8 +68,8 @@ public class SessionInterceptor extends BaseInterceptor {
 		final BaseAction action = ConversionUtils.as(BaseAction.class, invocation.getAction());
 		if (Objects.nonNull(action)) {
 			// To be safe, set our request/response information
-			action.setServletRequest(request);
-			action.setServletResponse((HttpServletResponse) context.get(StrutsStatics.HTTP_RESPONSE));
+			action.withServletRequest(request);
+			action.withServletResponse((HttpServletResponse) context.get(StrutsStatics.HTTP_RESPONSE));
 
 			final Optional<String> sessionId = action.getSessionId();
 
@@ -200,7 +200,7 @@ public class SessionInterceptor extends BaseInterceptor {
 		SessionInterceptor.verifySession(sessionMap, action, request);
 
 		// add the session into context
-		context.setSession(sessionMap);
+		context.withSession(sessionMap);
 		return invocation.invoke();
 	}
 }

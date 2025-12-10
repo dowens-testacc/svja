@@ -4,17 +4,17 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.TimeZone;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.StrutsStatics;
 import org.apache.struts2.json.JSONException;
 
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.interceptor.ExceptionHolder;
-import com.opensymphony.xwork2.interceptor.Interceptor;
+import org.apache.struts2.ActionContext;
+import org.apache.struts2.ActionInvocation;
+import org.apache.struts2.interceptor.ExceptionHolder;
+import org.apache.struts2.interceptor.Interceptor;
 
 import local.rdps.svja.action.BaseAction;
 import local.rdps.svja.action.RestAction;

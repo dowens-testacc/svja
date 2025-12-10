@@ -2,6 +2,7 @@ package local.rdps.svja.vo;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 import org.jetbrains.annotations.NotNull;
@@ -199,9 +200,25 @@ public class FileVo extends ItemVo {
 	 * @param contents
 	 *            The data to push to the file in question
 	 * @return The current {@link FileVo} instance
+	 * @see #setContents(String)
 	 */
 	public FileVo setContents(@Nullable final byte[] contents) {
 		this.contents = contents;
+		return this;
+	}
+
+	/**
+	 * <p>
+	 * This method sets the desired contents of the file in question to those provided.
+	 * </p>
+	 *
+	 * @param contents
+	 *            The data to push to the file in question
+	 * @return The current {@link FileVo} instance
+	 * @see #setContents(byte[])
+	 */
+	public FileVo setContents(@Nullable final String contents) {
+		this.contents = contents.getBytes(StandardCharsets.UTF_8);
 		return this;
 	}
 

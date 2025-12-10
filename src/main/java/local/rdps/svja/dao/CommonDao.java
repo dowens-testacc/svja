@@ -63,13 +63,12 @@ class CommonDao {
 
 		try (final Connection readConn = DatabaseManager.getConnection(false)) {
 			final DSLContext readContext = DatabaseManager.getBuilder(readConn);
-			try (final SelectQuery<Record> query = readContext.selectQuery(t)) {
-				if (ValidationUtils.isId(item.getId())) {
-					query.addConditions(DSL.field(t.getQualifiedName().append("id"), Long.class).equal(item.getId()));
-				}
-
-				return (Collection<I>) query.fetchInto(item.getClass());
+			final SelectQuery<Record> query = readContext.selectQuery(t);
+			if (ValidationUtils.isId(item.getId())) {
+				query.addConditions(DSL.field(t.getQualifiedName().append("id"), Long.class).equal(item.getId()));
 			}
+
+			return (Collection<I>) query.fetchInto(item.getClass());
 		} catch (final @NotNull SQLException e) {
 			CommonDao.logger.error(e.getMessage(), e);
 		}
@@ -103,11 +102,10 @@ class CommonDao {
 
 		try (final Connection readConn = DatabaseManager.getConnection(false)) {
 			final DSLContext readContext = DatabaseManager.getBuilder(readConn);
-			try (final SelectQuery<Record> query = readContext.selectQuery(t)) {
-				query.addConditions(condition);
+			final SelectQuery<Record> query = readContext.selectQuery(t);
+			query.addConditions(condition);
 
-				return (Collection<I>) query.fetchInto(item.getClass());
-			}
+			return (Collection<I>) query.fetchInto(item.getClass());
 		} catch (final @NotNull SQLException e) {
 			CommonDao.logger.error(e.getMessage(), e);
 		}

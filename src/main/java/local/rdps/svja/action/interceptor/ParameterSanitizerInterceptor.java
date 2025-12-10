@@ -12,8 +12,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import javax.annotation.concurrent.ThreadSafe;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -39,8 +38,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.google.json.JsonSanitizer;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionInvocation;
+import org.apache.struts2.ActionContext;
+import org.apache.struts2.ActionInvocation;
 
 import local.rdps.svja.constant.CommonConstants;
 import local.rdps.svja.exception.IllegalParameterException;
@@ -88,7 +87,6 @@ public class ParameterSanitizerInterceptor extends BaseInterceptor {
 	 * @author DaRon
 	 * @since 1.0
 	 */
-	@ThreadSafe
 	private static final class InputChangeLogger implements HtmlChangeListener<ActionContext> {
 		private static final Logger logger = LogManager.getLogger();
 
@@ -665,10 +663,10 @@ public class ParameterSanitizerInterceptor extends BaseInterceptor {
 			throw new IllegalParameterException("The HttpServletRequest cannot be null");
 
 		final String actionName;
-		if (local.rdps.svja.util.ValidationUtils.isEmpty(context.getName())) {
+		if (local.rdps.svja.util.ValidationUtils.isEmpty(context.getActionName())) {
 			actionName = CommonConstants.EMPTY_STRING;
 		} else {
-			actionName = ParameterSanitizerInterceptor.PATTERN_FIND_DIGITS.matcher(context.getName())
+			actionName = ParameterSanitizerInterceptor.PATTERN_FIND_DIGITS.matcher(context.getActionName())
 					.replaceAll(ParameterSanitizerInterceptor.DYNAMIC_ACTION_PLACEHOLDER);
 		}
 		final Scanner scanner = Scanner.getScanner(actionName, context);

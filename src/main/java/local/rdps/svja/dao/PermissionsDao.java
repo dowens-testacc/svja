@@ -48,25 +48,23 @@ class PermissionsDao {
 	static @NotNull PermissionsVo getUserPermissions(@NotNull final UserVo user) throws ApplicationException {
 		try (final Connection readConn = DatabaseManager.getConnection(false)) {
 			final DSLContext readContext = DatabaseManager.getBuilder(readConn);
-			try (final @NotNull SelectQuery<GroupPermissionsRecord> query = readContext.selectQuery(PermissionsDao.gp);
-					final @NotNull SelectQuery<UserGroupsRecord> subQuery = readContext
-							.selectQuery(PermissionsDao.ug)) {
+			final @NotNull SelectQuery<GroupPermissionsRecord> query = readContext.selectQuery(PermissionsDao.gp);
+			final @NotNull SelectQuery<UserGroupsRecord> subQuery = readContext.selectQuery(PermissionsDao.ug);
 
-				subQuery.addConditions(PermissionsDao.ug.GROUP_ID.equal(PermissionsDao.gp.GROUP_ID));
-				subQuery.addConditions(PermissionsDao.ug.USER_ID.equal(Integer.valueOf(user.getId().intValue())));
+			subQuery.addConditions(PermissionsDao.ug.GROUP_ID.equal(PermissionsDao.gp.GROUP_ID));
+			subQuery.addConditions(PermissionsDao.ug.USER_ID.equal(Integer.valueOf(user.getId().intValue())));
 
-				query.addConditions(DSL.exists(subQuery));
-				final @NotNull Result<GroupPermissionsRecord> results = query.fetch();
-				PermissionsVo permissions = new PermissionsVo();
-				for (final GroupPermissionsRecord result : results) {
-					final PermissionsVo perm = new PermissionsVo();
-					perm.setMayAdmin(Boolean.valueOf(PermissionsDao.TRUE.equals(result.getCanAdmin())));
-					perm.setMayWrite(Boolean.valueOf(PermissionsDao.TRUE.equals(result.getCanWrite())));
-					permissions = PermissionsVo.mergePermissions(permissions, perm);
-				}
-				permissions.setId(user.getId());
-				return permissions;
+			query.addConditions(DSL.exists(subQuery));
+			final @NotNull Result<GroupPermissionsRecord> results = query.fetch();
+			PermissionsVo permissions = new PermissionsVo();
+			for (final GroupPermissionsRecord result : results) {
+				final PermissionsVo perm = new PermissionsVo();
+				perm.setMayAdmin(Boolean.valueOf(PermissionsDao.TRUE.equals(result.getCanAdmin())));
+				perm.setMayWrite(Boolean.valueOf(PermissionsDao.TRUE.equals(result.getCanWrite())));
+				permissions = PermissionsVo.mergePermissions(permissions, perm);
 			}
+			permissions.setId(user.getId());
+			return permissions;
 		} catch (final @NotNull SQLException e) {
 			PermissionsDao.logger.error(e.getMessage(), e);
 

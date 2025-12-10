@@ -1,7 +1,5 @@
 package local.rdps.svja.construct;
 
-import javax.annotation.concurrent.ThreadSafe;
-
 import local.rdps.svja.exception.ApplicationException;
 import local.rdps.svja.exception.HijackingException;
 import local.rdps.svja.exception.IllegalParameterException;
@@ -16,7 +14,6 @@ import local.rdps.svja.util.Nonce;
  * @author DaRon
  * @since 1.0
  */
-@ThreadSafe
 public interface NonceFactoryInterface {
 	/**
 	 * <p>

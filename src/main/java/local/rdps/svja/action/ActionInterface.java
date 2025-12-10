@@ -1,10 +1,10 @@
 package local.rdps.svja.action;
 
-import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.ServletResponseAware;
-import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.action.ServletRequestAware;
+import org.apache.struts2.action.ServletResponseAware;
+import org.apache.struts2.action.SessionAware;
 
-import com.opensymphony.xwork2.interceptor.ParameterNameAware;
+import org.apache.struts2.action.ParameterNameAware;
 
 import local.rdps.svja.exception.ApplicationException;
 

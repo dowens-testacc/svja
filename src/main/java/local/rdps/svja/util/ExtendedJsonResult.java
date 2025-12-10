@@ -2,9 +2,9 @@ package local.rdps.svja.util;
 
 import org.apache.struts2.json.JSONResult;
 
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.util.TextParseUtil;
-import com.opensymphony.xwork2.util.ValueStack;
+import org.apache.struts2.ActionContext;
+import org.apache.struts2.util.TextParseUtil;
+import org.apache.struts2.util.ValueStack;
 
 /**
  * <p>

@@ -7,8 +7,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
-import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.interceptor.PreResultListener;
+import org.apache.struts2.ActionInvocation;
+import org.apache.struts2.interceptor.PreResultListener;
 
 import local.rdps.svja.action.BaseAction;
 import local.rdps.svja.util.ValidationUtils;
@@ -57,7 +57,7 @@ public class ActionTimer implements PreResultListener {
 			if (ActionTimer.logger.isWarnEnabled()) {
 				ActionTimer.logger.warn(
 						"We are running the session writer against something other than a BaseAction or the action is null; action = {} and the invocation was {}",
-						this.action, invocation.getInvocationContext().getName());
+						this.action, invocation.getInvocationContext().getActionName());
 			}
 		}
 	}
