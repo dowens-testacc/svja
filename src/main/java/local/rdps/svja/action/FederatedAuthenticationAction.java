@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.struts2.interceptor.parameter.StrutsParameter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -179,6 +180,7 @@ public class FederatedAuthenticationAction extends RestAction {
 	 *
 	 * @return The user record
 	 */
+	@StrutsParameter(depth = 1)
 	public @Nullable UserVo getUser() {
 		return this.user;
 	}
@@ -240,6 +242,7 @@ public class FederatedAuthenticationAction extends RestAction {
 	 * @param user
 	 *            The user record
 	 */
+	@StrutsParameter
 	public void setUser(final @Nullable UserVo user) {
 		this.user = user;
 	}
@@ -252,6 +255,7 @@ public class FederatedAuthenticationAction extends RestAction {
 	 * @param usernameTranslationRegex
 	 *            A perl-style regular expression
 	 */
+	@StrutsParameter
 	public void setUsernameTranslationRegex(final String usernameTranslationRegex) {
 		this.usernameTranslationRegex = usernameTranslationRegex;
 	}

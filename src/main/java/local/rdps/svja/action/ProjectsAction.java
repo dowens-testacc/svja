@@ -17,6 +17,7 @@ import local.rdps.svja.vo.FileVo;
 import local.rdps.svja.vo.PermissionsVo;
 import local.rdps.svja.vo.ProjectVo;
 import local.rdps.svja.vo.UserVo;
+import org.apache.struts2.interceptor.parameter.StrutsParameter;
 
 /**
  * <p>
@@ -105,11 +106,13 @@ public class ProjectsAction extends RestAction {
 	 * @return The requested data in an XLSX format
 	 */
 	@JsonProperty
+	@StrutsParameter(depth = 1)
 	public FileVo getExport() {
 		return this.export;
 	}
 
 	@JsonProperty
+	@StrutsParameter(depth = 1)
 	public ProjectVo getProject() {
 		if (Objects.nonNull(this.project) && ValidationUtils.not(ValidationUtils.isId(this.project.getId()))) {
 			this.project.setId(this.projectId);
@@ -118,6 +121,7 @@ public class ProjectsAction extends RestAction {
 	}
 
 	@JsonProperty
+	@StrutsParameter
 	public Long getProjectId() {
 		if (ValidationUtils.not(ValidationUtils.isId(this.projectId))) {
 			if (Objects.nonNull(this.project)) {
@@ -129,6 +133,7 @@ public class ProjectsAction extends RestAction {
 	}
 
 	@JsonProperty
+	@StrutsParameter(depth = 2)
 	public Collection<ProjectVo> getProjects() {
 		return this.projects;
 	}
@@ -225,6 +230,7 @@ public class ProjectsAction extends RestAction {
 	 *            Whether or not to export via a CSV file
 	 */
 	@JsonProperty
+	@StrutsParameter
 	public void setBasicCsvExport(final boolean basicCsvExport) {
 		this.basicCsvExport = basicCsvExport;
 	}
@@ -239,6 +245,7 @@ public class ProjectsAction extends RestAction {
 	 *            Whether or not to export via a CSV file
 	 */
 	@JsonProperty
+	@StrutsParameter
 	public void setCsvExport(final boolean csvExport) {
 		this.csvExport = csvExport;
 	}
@@ -252,22 +259,26 @@ public class ProjectsAction extends RestAction {
 	 *            Whether or not to export via an XLSX file
 	 */
 	@JsonProperty
+	@StrutsParameter
 	public void setExcelExport(final boolean excelExport) {
 		this.excelExport = excelExport;
 	}
 
+	@StrutsParameter
 	public void setProject(final ProjectVo project) {
 		if (Objects.nonNull(project)) {
 			this.project = project;
 		}
 	}
 
+	@StrutsParameter
 	public void setProjectId(final Long projectId) {
 		if (ValidationUtils.isId(projectId)) {
 			this.projectId = projectId;
 		}
 	}
 
+	@StrutsParameter
 	public void setProjects(final Collection<ProjectVo> projects) {
 		this.projects = projects;
 	}

@@ -19,6 +19,7 @@ import local.rdps.svja.util.ValidationUtils;
 import local.rdps.svja.vo.FileVo;
 import local.rdps.svja.vo.PermissionsVo;
 import local.rdps.svja.vo.UserVo;
+import org.apache.struts2.interceptor.parameter.StrutsParameter;
 
 /**
  * <p>
@@ -84,6 +85,7 @@ public class FilesAction extends RestAction {
 	}
 
 	@JsonProperty
+	@StrutsParameter(depth = 1)
 	public FileVo getFile() {
 		if (Objects.nonNull(this.file) && ValidationUtils.not(ValidationUtils.isId(this.file.getId()))) {
 			this.file.setId(this.fileId);
@@ -92,6 +94,7 @@ public class FilesAction extends RestAction {
 	}
 
 	@JsonProperty
+	@StrutsParameter
 	public Long getFileId() {
 		if (ValidationUtils.not(ValidationUtils.isId(this.fileId))) {
 			if (Objects.nonNull(this.file)) {
@@ -103,6 +106,7 @@ public class FilesAction extends RestAction {
 	}
 
 	@JsonProperty
+	@StrutsParameter
 	public String getFileName() {
 		if (ValidationUtils.not(ValidationUtils.isEmpty(this.fileName))) {
 			if (Objects.nonNull(this.file)) {
@@ -114,6 +118,7 @@ public class FilesAction extends RestAction {
 	}
 
 	@JsonProperty
+	@StrutsParameter(depth = 2)
 	public Collection<FileVo> getFiles() {
 		return this.files;
 	}
@@ -183,24 +188,28 @@ public class FilesAction extends RestAction {
 		return getPermissions().getMayWrite();
 	}
 
+	@StrutsParameter
 	public void setFile(final FileVo file) {
 		if (Objects.nonNull(file)) {
 			this.file = file;
 		}
 	}
 
+	@StrutsParameter
 	public void setFileId(final Long fileId) {
 		if (ValidationUtils.isId(fileId)) {
 			this.fileId = fileId;
 		}
 	}
 
+	@StrutsParameter
 	public void setFileName(final String fileName) {
 		if (ValidationUtils.not(ValidationUtils.isEmpty(fileName))) {
 			this.fileName = fileName;
 		}
 	}
 
+	@StrutsParameter
 	public void setFiles(final Collection<FileVo> files) {
 		this.files = files;
 	}

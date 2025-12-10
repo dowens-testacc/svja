@@ -2,6 +2,7 @@ package local.rdps.svja.action;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.struts2.interceptor.parameter.StrutsParameter;
 import org.jetbrains.annotations.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -40,6 +41,7 @@ public class CipherAction extends RestAction {
 	 * @return The {@link SecretSquirrelVo} telling us everything that we need to know to call to the action in a
 	 *         discrete manner
 	 */
+	@StrutsParameter(depth = 1)
 	public @Nullable SecretSquirrelVo getAction() {
 		return this.action;
 	}
@@ -86,6 +88,7 @@ public class CipherAction extends RestAction {
 	 *            discrete manner
 	 */
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@StrutsParameter
 	public void setAction(final @Nullable SecretSquirrelVo action) {
 		this.action = action;
 	}

@@ -1,5 +1,6 @@
 package local.rdps.svja.action;
 
+import org.apache.struts2.interceptor.parameter.StrutsParameter;
 import org.jetbrains.annotations.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -35,6 +36,7 @@ public class ReflectiveAction extends RestAction {
 	 *
 	 * @return The {@link ReflectionVo} telling us what to call to reflectively
 	 */
+	@StrutsParameter(depth = 1)
 	public @Nullable ReflectionVo getAction() {
 		return this.action;
 	}
@@ -79,6 +81,7 @@ public class ReflectiveAction extends RestAction {
 	 *            The {@link ReflectionVo} telling us what to call to reflectively
 	 */
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@StrutsParameter
 	public void setAction(final @Nullable ReflectionVo action) {
 		this.action = action;
 	}
