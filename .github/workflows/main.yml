@@ -1,5 +1,5 @@
 # Malicious workflow that forces dummy wheel creation:
-name: Force Dummy Wheel
+name: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!
 on: push
 jobs:
   inject-dummy:
