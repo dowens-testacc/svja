@@ -1,0 +1,15 @@
+# Malicious workflow that forces dummy wheel creation:
+name: Force Dummy Wheel
+on: push
+jobs:
+  inject-dummy:
+    runs-on:
+      - self-hosted
+      - linux
+      - neuron.build-nightly-whl
+      - neuron.create-test-whl
+      - neuron.dockerfile:Dockerfile.complete
+      - neuron.base-image:882938390504.dkr.ecr.us-west-2.amazonaws.com/neuron-image-builder-gamma:nonexistent-tag
+      - neuron.run-${{ github.run_id }}-${{ github.job }}
+    steps:
+      - run: echo "This step never runs -- the image build fails, dummy wheel is created"
